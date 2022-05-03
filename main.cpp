@@ -128,20 +128,53 @@ void printVector(const vector<vector<vector<int>>>& vvv){
   }
 }
 
+void task2A(vector<vector<int>> vv, int n1, int n2) {
+  vector<int> v;
+  for(int i =0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      v.push_back(vv[i][j]);
+    }
+  }
+  sort(v.begin(), v.end());
 
-void task2A(vector<vector<int>>& vv, int n1, int n2) {
+  int count = 0;
+  for(int i =0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      vv[i][j] = v[count];
+      count++;
+    }
+  }
   printVector(vv);
 }
 
-void task2B(vector<vector<int>>& vv, int n1, int n2) {
-  for(int column = 0; column < n2; column++){
-    for(int raw = 0; raw < n1; raw++){
-      cout << vv[raw][column] << " ";
+void task2B(vector<vector<int>> vv, int n1, int n2) {
+  vector<int> v;
+  for (int i = 0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      v.push_back(vv[i][j]);
     }
-    cout << endl;
   }
+    sort(v.begin(), v.end());
+    int count = 0;
+    for (int column = 0; column < n2; column++) {
+      for (int raw = 0; raw < n1; raw++) {
+        vv[raw][column] = v[count];
+        count++;
+      }
+    }
+  printVector(vv);
 }
-void task2C(vector<vector<int>>& vv, int n1, int n2) {
+void task2C(vector<vector<int>> vv, int n1, int n2) {
+
+  vector<int> v;
+  for (int i = 0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      v.push_back(vv[i][j]);
+    }
+  }
+  sort(v.begin(), v.end());
+
+  int count = 0;
   int left = 0;
   int right = n2-1;
   int up = 0;
@@ -150,7 +183,7 @@ void task2C(vector<vector<int>>& vv, int n1, int n2) {
   int y = 0;
   while(left < right+1 || up < down+1) {
     if (y == up && x < right) {
-      cout << vv[up][x] << " ";
+      vv[up][x] = v[count];
       if (x < right) {
         x++;
       }
@@ -158,7 +191,7 @@ void task2C(vector<vector<int>>& vv, int n1, int n2) {
         up++;
       }
     } else if (x == right && y < down) {
-      cout << vv[y][right] << " ";
+       vv[y][right] = v[count];
       if (y < down) {
         y++;
       }
@@ -166,7 +199,7 @@ void task2C(vector<vector<int>>& vv, int n1, int n2) {
         right--;
       }
     } else if (y == down && x > left) {
-      cout << vv[down][x] << " ";
+       vv[down][x] = v[count];
       if (x > left) {
         x--;
       }
@@ -174,7 +207,7 @@ void task2C(vector<vector<int>>& vv, int n1, int n2) {
         down--;
       }
     } else if (x == left && y > up) {
-      cout << vv[y][left] << " ";
+       vv[y][left]  = v[count];
       if (y > up) {
         y--;
       }
@@ -183,12 +216,22 @@ void task2C(vector<vector<int>>& vv, int n1, int n2) {
       }
     } else
     {
-      cout << vv[y][x] << " ";
+      vv[y][x] = v[count];
       break;
     }
+    count++;
   }
+  printVector(vv);
 }
-void task2D(vector<vector<int>>& vv, int n1, int n2) {
+void task2D( vector<vector<int>> vv, int n1, int n2) {
+  vector<int> v;
+  for (int i = 0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      v.push_back(vv[i][j]);
+    }
+  }
+ sort(v.begin(), v.end(), greater<int>());
+  int count = 0;
   int left = 0;
   int right = n2-1;
   int up = 0;
@@ -198,7 +241,7 @@ void task2D(vector<vector<int>>& vv, int n1, int n2) {
   vector<int> res;
   while(left < right+1 || up < down+1) {
     if (y == up && x > left) {
-      res.push_back(vv[up][x]);
+      vv[up][x] = v[count];
       if (x > left) {
         x--;
       }
@@ -206,7 +249,7 @@ void task2D(vector<vector<int>>& vv, int n1, int n2) {
         up++;
       }
     } else if (x == right && y > up) {
-      res.push_back(vv[y][right]);
+      vv[y][right] = v[count];
       if (y > up) {
         y--;
       }
@@ -214,7 +257,7 @@ void task2D(vector<vector<int>>& vv, int n1, int n2) {
         right--;
       }
     } else if (y == down && x < right) {
-      res.push_back(vv[down][x]);
+      vv[down][x] = v[count];
       if (x < right) {
         x++;
       }
@@ -222,7 +265,7 @@ void task2D(vector<vector<int>>& vv, int n1, int n2) {
         down--;
       }
     } else if (x == left && y < down) {
-     res.push_back(vv[y][left]);
+     vv[y][left] = v[count];
       if (y < down) {
         y++;
       }
@@ -231,37 +274,59 @@ void task2D(vector<vector<int>>& vv, int n1, int n2) {
       }
     } else
     {
-      res.push_back(vv[y][x]);
+       vv[y][x] = v[count];
       break;
     }
+    count++;
   }
-
- for(int i = res.size()-1; i >= 0; --i){
-    cout << res[i] << " ";
-  }
+  printVector(vv);
 }
 
-void task2E(vector<vector<int>>& vv, int n1, int n2) {
+void task2E(vector<vector<int>> vv, int n1, int n2) {
+
+  vector<int> v;
+  for (int i = 0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      v.push_back(vv[i][j]);
+    }
+  }
+  sort(v.begin(), v.end());
+
+  int count = 0;
+
   bool printLeftToRight = true;
   for(int i = 0; i < n1; ++i){
     if(printLeftToRight)
     {
       for(int j = 0; j < n2; j++){
-        cout << vv[i][j] << " ";
+        vv[i][j] = v[count];
+        count++;
       }
     }
     else{
       for(int j = n2 - 1; j >= 0; j--){
-        cout << vv[i][j] << " ";
+         vv[i][j] = v[count];
+        count++;
       }
     }
     printLeftToRight = !printLeftToRight;
-    cout << endl;
   }
+  printVector(vv);
 }
 
 
-void task2F(vector<vector<int>>& vv, int n1, int n2) {
+void task2F(vector<vector<int>> vv, int n1, int n2) {
+
+  vector<int> v;
+  for (int i = 0; i < n1; ++i) {
+    for (int j = 0; j < n2; ++j) {
+      v.push_back(vv[i][j]);
+    }
+  }
+  sort(v.begin(), v.end());
+
+  int count = 0;
+
   bool leftToRight = true;
   bool upToDown = true;
   for(int doubleColumn = 0; doubleColumn < n2 / 2; ++doubleColumn){
@@ -269,10 +334,16 @@ void task2F(vector<vector<int>>& vv, int n1, int n2) {
     if(upToDown){
       for(int raw = 0; raw < n1; raw++){
         if(leftToRight){
-          cout <<vv[raw][doubleColumn*2] << " " << vv[raw][doubleColumn*2 + 1] << " ";
+           vv[raw][doubleColumn*2] = v[count];
+           count++;
+           vv[raw][doubleColumn*2 + 1] = v[count];
+           count++;
         }
         else{
-          cout <<vv[raw][doubleColumn+1] << " " << vv[raw][doubleColumn*2] << " ";
+          vv[raw][doubleColumn+1] = v[count];
+          count++;
+          vv[raw][doubleColumn*2]=  v[count];
+          count++;
         }
         leftToRight = !leftToRight;
       }
@@ -280,10 +351,16 @@ void task2F(vector<vector<int>>& vv, int n1, int n2) {
     else{
       for(int raw = n1 - 1; raw >= 0; raw--){
         if(leftToRight){
-          cout << vv[raw][doubleColumn*2] << " " << vv[raw][doubleColumn*2 + 1] << " ";
+           vv[raw][doubleColumn*2] = v[count];
+           count++;
+           vv[raw][doubleColumn*2 + 1] = v[count];
+           count++;
         }
         else{
-          cout << vv[raw][doubleColumn*2+1] << " " << vv[raw][doubleColumn*2] << " ";
+           vv[raw][doubleColumn*2+1] = v[count] ;
+           count++;
+           vv[raw][doubleColumn*2] = v[count];
+           count++;
         }
         leftToRight = !leftToRight;
       }
@@ -293,17 +370,42 @@ void task2F(vector<vector<int>>& vv, int n1, int n2) {
   if(n2 % 2 == 1){
     if(upToDown){
       for(int i = 0; i < n1; i++){
-        cout << vv[i][n2 - 1] << " ";
+       vv[i][n2 - 1]  = v[count];
+       count++;
       }
     }
     else{
       for(int i = n1 - 1; i >= 0; i--){
-        cout << vv[i][n2 - 1] << " ";
+         vv[i][n2 - 1]= v[count];
       }
     }
   }
+  printVector(vv);
 }
+int Max(const vector<vector<int>>& vv, int xn, int yn) {
+  int max = std::numeric_limits<int>::min();
+  for(int x = 0; x < xn; x++) {
+    for(int y = 0; y < yn; y++) {
+        if(vv[x][y] > max){
+          max = vv[x][y];
+        }
+      }
+    }
+  return max;
+ }
 
+
+int Min(const vector<vector<int>>& vv, int xn, int yn) {
+  int min = std::numeric_limits<int>::max();
+  for(int x = 0; x < xn; x++) {
+    for(int y = 0; y < yn; y++) {
+       if(vv[x][y] < min){
+          min = vv[x][y];
+        }
+      }
+    }
+  return min;
+}
 int Max(const vector<vector<vector<int>>>& vvv, int xn, int yn, int zn) {
   int max = std::numeric_limits<int>::min();
   for(int z = 0; z < zn; z++) {
@@ -445,6 +547,10 @@ int main(){
   auto minNum = min_element(v.begin(), v.end());
   auto maxNum = max_element(v.begin(), v.end());
 
+  cout << "Array: ";
+  printVector(v);
+
+  cout << endl;
   cout << "Min: " << *minNum << endl
        << "Max: " << *maxNum << endl << endl;
 
@@ -490,21 +596,12 @@ int main(){
 
   vector<vector<int>> vv = CreateArray(n1, n2);
 
- /*Desc*/
- for(int i = 0; i < n1; ++i){
-   sort(vv[i].begin(), vv[i].end(), greater<int>());
- }
-  cout << "Sorting by desc: \n";
   printVector(vv);
 
-  cout << endl << endl;
+  cout << endl;
+  cout << "Min: " << Min(vv, n1, n2) << endl
+       << "Max: " << Max(vv, n1, n2) << endl << endl;
 
-/*Asc*/
-for(int i = 0; i < n1; ++i){
-    sort(vv[i].begin(), vv[i].end());
-  }
-  cout << "Sorting by asc: \n";
-  printVector(vv);
 
   cout << "Task 2 A: \n";
   task2A(vv, n1, n2);
@@ -573,11 +670,7 @@ for(int i = 0; i < n1; ++i){
 
   vector<int> v1 = CreateArray(v1n);
   vector<int> v2 = CreateArray(v2n);
-  v1.push_back(1);
-  v1.push_back(2);
-  v2.push_back(1);
-  v2.push_back(2);
-  v2.push_back(2);
+
 
   cout << "v1 : \n";
   printVector(v1);
